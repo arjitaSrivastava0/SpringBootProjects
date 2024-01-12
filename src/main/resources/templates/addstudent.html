@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Student Management System</title>
+	<style>
+		.error{
+			color:red;
+		}
+	</style>
+	<link rel="stylesheet"
+		  href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+	<!-- Brand -->
+	<a class="navbar-brand" href="#">Student Management System</a>
+
+	<!-- Toggler/collapsibe Button -->
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<!-- Navbar links -->
+	<div class="collapse navbar-collapse" id="collapsibleNavbar">
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link" th:href="@{/student/list}">Dashboard</a>
+			</li>
+
+		</ul>
+	</div>
+</nav>
+<div class="container">
+	<hr>
+	<h2>Add new Student</h2>
+
+	<form action="#" th:action="@{/student/save}" th:object="${newstudent}" method="get">
+
+		<label for="firstname">First name</label>
+		<input class="form-control mb-4 col-4" type="text" th:field="*{firstname}" id="firstname" placeholder="Firstname">
+		<span th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" th:errorclass="error"></span>
+		<br>
+		<label for="lastname">Last name</label>
+		<input class="form-control mb-4 col-4" type="text" th:field="*{lastname}" id="lastname" placeholder="LastName">
+		<span th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" th:errorclass="error"></span>
+		<br>
+
+		<label for="email">Email</label>
+		<input class="form-control mb-4 col-4" type="text" th:field="*{email}" id="email" placeholder="Email">
+		<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="error"></span>
+		<br>
+		<input class="btn btn-info col-2" type="submit" value="Add User">
+
+	</form>
+
+	<hr>
+
+	<a th:href = "@{/student/list}"> Back to Student List</a>
+</div>
+</body>
+</html>

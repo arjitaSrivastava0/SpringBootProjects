@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Management System</title>
+
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">Student Management System</a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/student/list}">Dashboard</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <h1>Student Management System</h1>
+  <hr>
+  <h2>Update Student</h2>
+
+  <form action="#" th:action="@{/student/save}" th:object="${editstudent}"
+        method="GET">
+
+    <!-- Add hidden form field to handle update -->
+    <input type="hidden" th:field="*{id}" />
+
+    <input type="text" th:field="*{firstname}" class="form-control mb-4 col-4">
+
+    <input type="text" th:field="*{lastname}" class="form-control mb-4 col-4">
+
+    <input type="text" th:field="*{email}" class="form-control mb-4 col-4">
+
+    <button type="submit" class="btn btn-info col-2"> Update Student</button>
+  </form>
+
+  <hr>
+
+  <a th:href = "@{/student/list}"> Back to Student List</a>
+</div>
+</body>
+</html>
