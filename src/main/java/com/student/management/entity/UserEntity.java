@@ -3,35 +3,54 @@ package com.student.management.entity;
 
 import java.util.Collection;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-//@Table(name =  "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-@Table(name = "user")
+@Table(name =  "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+//@Table(name = "user")
+
+@Getter
+@Setter
 public class UserEntity {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long user_id;
+    @Column(name = "userid")
+    private Long userid;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @Column(name = "firstname")
+    @Pattern(regexp = "^[a-zA-Z0-9]{3,12}$",
+            message = "firstname must be of 3 to 12 length with no special characters")
+    @NotBlank(message = "Firstname is mandatory")
+    private String firstname;
 
-    @Column(name = "last_name")
-    private String lastName;
+    @Pattern(regexp = "^[a-zA-Z0-9]{3,12}$",
+            message = "lastname must be of 3 to 12 length with no special characters")
+    @NotBlank(message = "Lastname is mandatory")
+    @Column(name = "lastname")
+    private String lastname;
 
+    @NotBlank(message = "Email is mandatory")
+    @Column(name = "email", nullable = false)
+    @Email(regexp = "^(.+)@(.+)$", message = "Must be a well formed email.")
     private String email;
 
     private String password;
 
     private String isadmin;
 
+
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "user_id"),
+                    name = "user_id", referencedColumnName = "userid"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "role_id"))
 
@@ -39,55 +58,15 @@ public class UserEntity {
 
     public UserEntity(){}
 
-    public UserEntity(String firstName, String lastName, String email, String password, String isadmin, Collection<UserRole> roles) {
+    public UserEntity(String firstname, String lastname, String email, String password, String isadmin, Collection<UserRole> roles) {
         super();
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.password = password;
         this.isadmin= isadmin;
         this.roles = roles;
     }
-    public Long getId() {
-        return user_id;
-    }
-    public void setId(Long id) {
-        this.user_id = user_id;
-    }
-    public String getFirstName() {
-        return firstName;
-    }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    public String getLastName() {
-        return lastName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
-    public String getIsadmin() {return isadmin;}
-
-    public void setIsadmin(String isadmin) {  this.isadmin = isadmin; }
-
-    public Collection<UserRole> getRoles() {
-        return roles;
-    }
-    public void setRoles(Collection<UserRole> roles) {
-        this.roles = roles;
-    }
 
 }

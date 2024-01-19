@@ -21,7 +21,7 @@
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" th:href="@{/student/list}">Dashboard</a>
+        <a class="nav-link" th:href="@{/admin/list}">Dashboard</a>
       </li>
 
     </ul>
@@ -32,10 +32,11 @@
   <hr>
   <h2>Update Student</h2>
 
-  <form action="#" th:action="@{/student/updatestudent}" th:object="${editstudent}"  method="post">
+  <form action="#" th:action="@{/admin/save}" th:object="${edituser}"
+        method="GET">
 
     <!-- Add hidden form field to handle update -->
-    <input type="hidden" th:field="*{id}" />
+    <input type="hidden" th:field="*{userid}" />
 
     <input type="text" th:field="*{firstname}" class="form-control mb-4 col-4">
 
@@ -43,12 +44,15 @@
 
     <input type="text" th:field="*{email}" class="form-control mb-4 col-4">
 
-    <button type="submit" class="btn btn-info col-2"> Update Student</button>
+    <input type="text" th:field="*{isadmin}" class="form-control mb-4 col-4">
+    <input type="hidden" th:field="*{password}" />
+
+    <button type="submit" class="btn btn-info col-2"> Update User</button>
   </form>
 
   <hr>
 
-  <a th:href = "@{/student/list}"> Back to Student List</a>
+  <a th:href = "@{/admin/list}"> Back to Users List</a>
 </div>
 </body>
 </html>

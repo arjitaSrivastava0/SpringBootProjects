@@ -33,7 +33,7 @@ public class StudentEntity {
 
     @NotBlank(message = "Email is mandatory")
     @Column(name = "email", nullable = false)
-    @Email(regexp = "^(.+)@(.+)$", message = "Must be a well formed email.")
+//    @Email(regexp = "^(.+)@(.+)$", message = "Must be a well formed email.")
     private String email;
 
 //    private List<CourseEntity> courses;

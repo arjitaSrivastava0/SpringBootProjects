@@ -60,5 +60,13 @@ public class StudentService {
     public void deleteStudentById(Long id) {
         studentRepo.deleteById(id);
     }
+
+    public void deleteStudentByEmail(String email) {
+        studentRepo.deleteByEmail(email);
+    }
+
+    public StudentEntity getStudentByEmail(String email){
+        return studentRepo.getStudentByEmail(email);
+    }
 }
 

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>studentss Management System</title>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+</head>
+
+
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">Student Management System</a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/admin/list}">Dashboard</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class ="container">
+  <div class = "row">
+    <h1>Hi Admin.. Upload the file </h1><br>
+
+  </div>
+  <br>
+
+  <div align="left">
+        <h5>Upload Student Data</h5>
+        <form th:action="@{/admin/upload}" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <button class = "btn btn-primary btn-sm mb-3" type="submit">Upload</button>
+        </form>
+  </div>
+  <br><br><br>
+  <!-- ... existing content ... -->
+<div>
+  <table class = "table table-striped table-bordered">
+    <thead class = "table-dark">
+    <h3 align="center">File Upload Format</h3>
+  <tr>
+    <th>Email </th>
+    <th>First Name(3-12 character)</th>
+    <th>Is Admin(yes/no)</th>
+    <th>Last Name(3-12 character) </th>
+    <th>Password </th>
+  </tr>
+    </thead>
+    <tbody>
+      <td>user.example@gmail.com</td>
+      <td>user</td>
+      <td>no</td>
+      <td>example</td>
+      <td>password</td>
+    </tbody>
+    <tbody>
+      <td>student.example@gmail.com</td>
+      <td>student</td>
+      <td>yes</td>
+      <td>example</td>
+      <td>password</td>
+    </tbody>
+  </table>
+
+</div>
+
+</div>
+</body>
+
+</html></title>
+</head>
+<body>
+
+</body>
+</html>

@@ -8,6 +8,10 @@ import com.student.management.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +20,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Collection;
+import java.util.List;
 
 
 @Controller
@@ -32,17 +39,9 @@ public class LoginController {
         return "login";
     }
 
-//    @PostMapping("/login")
-//    public String verifyLoggedUser(@RequestBody UserEntity user) {
-//        UserEntity existingUserDetails = userService.getByEmailId(user.getEmail());
-////        if(existingUserDetails.getRoles() == )
-//
-//        return "";
-//    }
-
     @PostMapping("login/verify")
 
-    public String login( @ModelAttribute("loginuser")@RequestBody LoginReqDto loginReqDto, BindingResult bindingResult, Model model) {
+    public String login( @ModelAttribute LoginReqDto loginReqDto, BindingResult bindingResult, Model model) {
         log.info("CALLED METhod......");
         if (bindingResult.hasErrors()) {
             model.addAttribute("loginuser", "Invalid credentials");
@@ -52,13 +51,14 @@ public class LoginController {
         log.info("loggedInUser:   "+loggedInUser);
         if (loggedInUser.getPassword().equals(loginReqDto.getPassword())) {
             log.info("loginReqDto.getRoles():   "+loggedInUser.getAuthorities().toString());
-            if(!loggedInUser.getAuthorities().equals("ADMIN")){
+            if (loggedInUser != null && loggedInUser.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+                log.info(" admin");
+                return "redirect:../admin/list";
+            } else {
                 log.info("not admin");
-//                model.addAttribute("studentpage","student");
-                return "redirect:student/list";
-            }else {
-                log.info("this is admin");
-                return "redirect:student/list";
+                String email = loggedInUser.getUsername();
+                log.info("email from login:   "+email);
+                return "redirect:../student/list/"+email;
             }
         }
 
@@ -66,4 +66,5 @@ public class LoginController {
         log.info("called invalid");
         return "redirect:/login";
     }
+
 }

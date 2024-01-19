@@ -1,5 +1,6 @@
 package com.student.management.controller;
 
+import com.student.management.Dto.StudentUpdateReq;
 import com.student.management.entity.StudentEntity;
 import com.student.management.service.StudentService;
 import jakarta.validation.Valid;
@@ -29,10 +30,11 @@ public class StudentMvcController {
         return "addstudent";
     }
 
-    @GetMapping("/list")
-    public String listStudents(ModelMap model) {
-        log.info("studentService.getAllStudents(): "+studentService.getAllStudents());
-        model.addAttribute("studentlist", studentService.getAllStudents());
+    @GetMapping("/list/{email}")
+    public String listStudents(@PathVariable(name = "email") String email, ModelMap model) {
+        log.info("email mvccontroller: "+email);
+        log.info("studentService.getAllStudents(): "+studentService.getStudentByEmail(email));
+        model.addAttribute("studentlist", studentService.getStudentByEmail(email));
         return "student";
     }
 
@@ -54,9 +56,20 @@ public class StudentMvcController {
         return "redirect:/student/list";
     }
 
-    @GetMapping("/edit/{id}")
-    public String showEditStudentPage(@PathVariable(name = "id")Long id, Model model) {
-        StudentEntity std = studentService.getStudentById(id);
+    @PostMapping("/updatestudent")
+    public String updateStudent(@ModelAttribute StudentUpdateReq studentEntity,
+                                BindingResult bindingResult,Model model) {
+        log.info("student entity: "+studentEntity.getEmail());
+        StudentEntity existingStudent = studentService.getStudentByEmail(studentEntity.getEmail());
+        existingStudent.setFirstname(studentEntity.getFirstname());
+        existingStudent.setLastname(studentEntity.getLastname());
+        studentService.updateStudent(existingStudent);
+        return "redirect:/student/list/"+existingStudent.getEmail();
+    }
+
+    @GetMapping("/edit/{email}")
+    public String showEditStudentPage(@PathVariable(name = "email")String email, Model model) {
+        StudentEntity std = studentService.getStudentByEmail(email);
         model.addAttribute("editstudent", std);
         return "update";
     }

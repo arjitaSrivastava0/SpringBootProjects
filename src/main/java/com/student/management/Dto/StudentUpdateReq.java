@@ -1,18 +1,13 @@
 package com.student.management.Dto;
 
-
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Data
-public class UserRegistrationDto {
-
-
-    private String firstName;
-    private String lastName;
+public class StudentUpdateReq {
+    private Long id;
+    private String firstname;
+    private String lastname;
     private String email;
-    private String password;
-    private String isadmin;
-
 }

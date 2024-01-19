@@ -35,21 +35,37 @@
 	<hr>
 	<h2>Add new Student</h2>
 
-	<form action="#" th:action="@{/student/save}" th:object="${newstudent}" method="get">
+	<form action="#" th:action="@{/admin/newuser}" th:object="${newuser}" method="get">
 
-		<label for="firstname">First name</label>
-		<input class="form-control mb-4 col-4" type="text" th:field="*{firstname}" id="firstname" placeholder="Firstname">
-		<span th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" th:errorclass="error"></span>
-		<br>
-		<label for="lastname">Last name</label>
-		<input class="form-control mb-4 col-4" type="text" th:field="*{lastname}" id="lastname" placeholder="LastName">
-		<span th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" th:errorclass="error"></span>
-		<br>
+		<div class="form-group">
+			<label class="control-label" for="firstName"> First Name </label>
+			<input id="firstName" class="form-control" th:field="*{firstName}"
+				   required autofocus="autofocus" />
+		</div>
 
-		<label for="email">Email</label>
-		<input class="form-control mb-4 col-4" type="text" th:field="*{email}" id="email" placeholder="Email">
-		<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="error"></span>
-		<br>
+		<div class="form-group">
+			<label class="control-label" for="lastName"> Last Name </label> <input
+				id="lastName" class="form-control" th:field="*{lastName}"
+				required autofocus="autofocus" />
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="email"> Email </label> <input
+				id="email" class="form-control" th:field="*{email}" required
+				autofocus="autofocus" />
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="password"> Password </label> <input
+				id="password" class="form-control" type="password"
+				th:field="*{password}" required autofocus="autofocus" />
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="isadmin"> Is Admin </label> <input
+				id="isadmin" class="form-control"
+				th:field="*{isadmin}" required autofocus="autofocus" />
+		</div>
 		<input class="btn btn-info col-2" type="submit" value="Add User">
 
 	</form>

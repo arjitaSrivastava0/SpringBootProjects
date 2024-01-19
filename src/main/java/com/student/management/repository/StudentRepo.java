@@ -12,4 +12,8 @@ public interface StudentRepo extends JpaRepository<StudentEntity,Long> {
     List<StudentEntity> findByLastnameLike(String keyword);
 
     List<StudentEntity> findByFirstnameContaining(String letter);
+
+    void deleteByEmail(String email);
+
+    StudentEntity getStudentByEmail(String email);
 }

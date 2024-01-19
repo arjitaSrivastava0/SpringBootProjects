@@ -37,17 +37,17 @@ public class SecurityConfig {
                                 .requestMatchers("/student/**").permitAll()
                                 .requestMatchers("/admin/**").permitAll()
                                 .requestMatchers(("/login/**")).permitAll()
-                ).formLogin(
-                        form -> form
-                                .loginPage("/login")
-                                .usernameParameter("email")
-//                                .loginPage("/registration")
-                                .permitAll()
-                ).logout(
-                        logout -> logout
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .permitAll()
                 );
+//                .formLogin(
+//                        form -> form
+//                                .loginPage("/login")
+////                                .usernameParameter("email")
+//                                .permitAll()
+//                ).logout(
+//                        logout -> logout
+//                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//                                .permitAll()
+//                );
         log.info("called security filter....");
         return http.build();
     }
