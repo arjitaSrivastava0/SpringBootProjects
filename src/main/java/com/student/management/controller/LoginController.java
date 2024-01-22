@@ -51,12 +51,14 @@ public class LoginController {
         log.info("loggedInUser:   "+loggedInUser);
         if (loggedInUser.getPassword().equals(loginReqDto.getPassword())) {
             log.info("loginReqDto.getRoles():   "+loggedInUser.getAuthorities().toString());
+            String email = loggedInUser.getUsername();
             if (loggedInUser != null && loggedInUser.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
                 log.info(" admin");
+//                return "redirect:../admin/list/"+email;
                 return "redirect:../admin/list";
             } else {
                 log.info("not admin");
-                String email = loggedInUser.getUsername();
+
                 log.info("email from login:   "+email);
                 return "redirect:../student/list/"+email;
             }

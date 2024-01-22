@@ -32,23 +32,27 @@
   <hr>
   <h2>Update Student</h2>
 
-  <form action="#" th:action="@{/student/updatestudent}" th:object="${editstudent}"  method="post">
+  <form action="#" th:action="@{/student/updatestudent/{email}(email=${editstudent.email})}" th:object="${editstudent}"  method="post">
 
     <!-- Add hidden form field to handle update -->
     <input type="hidden" th:field="*{id}" />
 
+    First Name
     <input type="text" th:field="*{firstname}" class="form-control mb-4 col-4">
 
+    Last name
     <input type="text" th:field="*{lastname}" class="form-control mb-4 col-4">
 
+    Email
     <input type="text" th:field="*{email}" class="form-control mb-4 col-4">
+
 
     <button type="submit" class="btn btn-info col-2"> Update Student</button>
   </form>
 
   <hr>
 
-  <a th:href = "@{/student/list}"> Back to Student List</a>
+  <a th:href = "@{/student/list/{email}}"> Back to Student List</a>
 </div>
 </body>
 </html>

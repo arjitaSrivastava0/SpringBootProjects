@@ -1,6 +1,8 @@
 package com.student.management.repository;
 
 import com.student.management.entity.StudentEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -16,4 +18,6 @@ public interface StudentRepo extends JpaRepository<StudentEntity,Long> {
     void deleteByEmail(String email);
 
     StudentEntity getStudentByEmail(String email);
+
+    Page<StudentEntity> getStudentByEmail(String email, Pageable pageable);
 }

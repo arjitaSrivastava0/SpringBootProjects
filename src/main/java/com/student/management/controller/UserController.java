@@ -49,8 +49,16 @@ public class UserController {
         if(result.hasErrors()){
             return "admin";
         }
-        userService.save(userUpdateReqDto);
-        return "redirect:/admin/list";
+        UserEntity userFromDb = userService.getUserByEmail(userUpdateReqDto.getEmail());
+        log.info(userFromDb.toString()+" userfromdb ");
+        if(userFromDb == null){
+            log.info("called newuser");
+            userService.save(userUpdateReqDto);
+            return "redirect:/admin/list";
+        }
+       model.addAttribute("message","Email id already exists.");
+        return "addstudent";
+
     }
 
     @GetMapping("/uploadpage")
@@ -59,7 +67,7 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    public String listStudents(@RequestParam(defaultValue = "0") int page,
+    public String listStudents( @RequestParam(defaultValue = "0") int page,
                                  @RequestParam(defaultValue = "10",required = false) int size,
                                  @RequestParam(defaultValue = "firstname") String sortBy,
                                  @RequestParam(defaultValue = "asc") String sortOrder,
@@ -108,8 +116,9 @@ public class UserController {
     }
     @GetMapping("/delete/{email}")
     public String deleteStudentPage(@PathVariable(name = "email") String email) {
+        log.info("email delete: "+email);
         userService.deleteUserByEmail(email);
-        studentService.deleteStudentByEmail(email);
+//        studentService.deleteStudentByEmail(email);
         return "redirect:/admin/list";
     }
 
@@ -120,7 +129,8 @@ public class UserController {
             //TODO: validation check for existing email.
             InputStream inputStream = file.getInputStream();
             Workbook workbook = new XSSFWorkbook(inputStream);
-
+            int count = 0;
+            int totalrecord = 0;
             for (Sheet sheet : workbook) {
                 for (Row row : sheet) {
 
@@ -134,7 +144,7 @@ public class UserController {
                     UserEntity existingUser = userService.getUserByEmail(email);
                     log.info("email from file:    "+email);
 //                    log.info("existingUser: "+existingUser.getEmail());
-
+                    totalrecord++;
                     if(existingUser == null ){
                         log.info("no email present");
                         UserRegistrationDto userRegistrationDto = new UserRegistrationDto();
@@ -145,7 +155,7 @@ public class UserController {
                         userRegistrationDto.setPassword(password);
 
                         userService.save(userRegistrationDto);
-
+                        count++;
 //                        if(isadmin.equals("no")) {
 //                            StudentEntity student = new StudentEntity();
 //                            student.setEmail(email);
@@ -159,7 +169,8 @@ public class UserController {
 
                 }
             }
-            model.addAttribute("message", "File uploaded successfully: " + file.getOriginalFilename());
+            log.info("count: "+count+" totalrows: "+totalrecord);
+            model.addAttribute("message", count+" record uploaded successfully: " + (totalrecord-count)+" records failed email id already exists"+ file.getOriginalFilename());
             workbook.close();
             inputStream.close();
         } catch (Exception e) {
@@ -205,7 +216,7 @@ public class UserController {
 
         // Set the response headers
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setHeader("Content-Disposition", "attachment; filename=students.xlsx");
+        response.setHeader("Content-Disposition", "attachment; filename=users.xlsx");
 
         // Write the workbook to the response output stream
         OutputStream outputStream = response.getOutputStream();

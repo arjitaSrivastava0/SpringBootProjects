@@ -4,6 +4,8 @@ import com.student.management.entity.StudentEntity;
 import com.student.management.repository.StudentRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +23,8 @@ public class StudentService {
 
 
     //fetch students methods
-    public List<StudentEntity> getAllStudents() {
-        return studentRepo.findAll();
+    public Page<StudentEntity> getAllStudents(Pageable pageable) {
+        return studentRepo.findAll(pageable);
     }
 
     public StudentEntity getStudentById(Long id) {
@@ -67,6 +69,10 @@ public class StudentService {
 
     public StudentEntity getStudentByEmail(String email){
         return studentRepo.getStudentByEmail(email);
+    }
+
+    public Page<StudentEntity> getStudentByEmailPaginated(String email, Pageable pageable){
+        return studentRepo.getStudentByEmail(email,pageable);
     }
 }
 

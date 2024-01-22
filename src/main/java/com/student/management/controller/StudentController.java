@@ -19,11 +19,11 @@ public class StudentController {
     private final StudentService studentService;
 
     // handler method to handle list students
-    @GetMapping("/fetch/all")
-    public List<StudentEntity> allStudents() {
-        List<StudentEntity> student = studentService.getAllStudents();
-        return student;
-    }
+//    @GetMapping("/fetch/all")
+//    public List<StudentEntity> allStudents() {
+//        List<StudentEntity> student = studentService.getAllStudents();
+//        return student;
+//    }
 //    @GetMapping("/list")
 //    public String listStudents(Model model) {
 //        log.info("studentService.getAllStudents(): "+studentService.getAllStudents());

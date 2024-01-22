@@ -36,7 +36,6 @@ public class StudentEntity {
 //    @Email(regexp = "^(.+)@(.+)$", message = "Must be a well formed email.")
     private String email;
 
-//    private List<CourseEntity> courses;
 
 }
 

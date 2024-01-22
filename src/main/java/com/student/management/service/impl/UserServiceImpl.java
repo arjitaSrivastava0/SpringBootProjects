@@ -8,8 +8,11 @@ import com.student.management.entity.UserRole;
 import com.student.management.repository.StudentRepo;
 import com.student.management.repository.UserRepo;
 import com.student.management.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +33,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class UserServiceImpl implements UserService{
 
     private final UserRepo userRepository;
@@ -81,6 +85,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void deleteUserByEmail(String email) {
+        studentRepo.deleteByEmail(email);
         userRepository.deleteByEmail(email);
     }
 

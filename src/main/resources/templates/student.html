@@ -34,9 +34,7 @@
         <h1>
             Students Record</h1>
     </div>
-    <div align="right" >
-        <a class="btn btn-primary btn-sm mb-3" th:href="@{/student/download}" target="_blank">Export as .xlsx</a>
-    </div>
+
 
     <table class = "table table-striped table-bordered">
         <thead class = "table-dark">
@@ -58,8 +56,8 @@
                 <a th:href = "@{/student/edit/{email}(email=${students.email})}"
                    class = "btn btn-primary">Update</a>
 
-<!--                <a th:href = "@{/student/delete/{id}(id=${students.id})}"-->
-<!--                   class = "btn btn-danger">Delete</a>-->
+                <a th:href = "@{/student/download/{email}(email=${students.email})}"
+                   class = "btn btn-primary">Export as .xlsx</a>
 
             </td>
         </tr>
