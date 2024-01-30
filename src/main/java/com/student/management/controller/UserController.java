@@ -187,6 +187,7 @@ public class UserController {
                                  @RequestParam(defaultValue = "asc") String sortOrder,
                                  HttpServletResponse response) throws IOException {
 //        List<UserEntity> students = userService.getAllUserDetails();
+        log.info("page: "+page+" size: "+size);
         Sort sort = Sort.by(Sort.Direction.fromString(sortOrder), sortBy);
         Page<UserEntity> studentPage = userService.getAllStudents(PageRequest.of(page, size, sort));
 
@@ -216,7 +217,9 @@ public class UserController {
 
         // Set the response headers
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setHeader("Content-Disposition", "attachment; filename=users.xlsx");
+        int pageStart = (page*size);
+        int pageEnd=pageStart+size;
+        response.setHeader("Content-Disposition", "attachment; filename=users_"+pageStart+"_"+pageEnd+".xlsx");
 
         // Write the workbook to the response output stream
         OutputStream outputStream = response.getOutputStream();

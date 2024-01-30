@@ -76,7 +76,7 @@
 
 <!--    <button class="btn btn-primary btn-sm mb-3">-->
     <div align="right" th:if="${totalPages > 1}">
-        <a  th:href="@{/admin/download(page=${pageNumber}, sortBy=${sortBy}, sortOrder=${sortOrder})}" class = "btn btn-primary" target="_blank">Export as .xlsx</a>
+        <a  th:href="@{/admin/download(page=${currentPage}, sortBy=${sortBy}, sortOrder=${sortOrder})}" class = "btn btn-primary" target="_blank">Export as .xlsx</a>
 <!--    </button>-->
         <ul class="pagination">
             <li class="page-item" th:class="${currentPage == 0} ? 'disabled' : ''">
